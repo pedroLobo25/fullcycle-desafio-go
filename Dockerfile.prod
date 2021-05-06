@@ -1,7 +1,18 @@
+FROM golang:1.16 as builder 
+
+WORKDIR /go/src/app
+COPY ./src .
+
+RUN go build
+
+RUN rm -rf go.mod && rm -rf hello.go &&\
+    mkdir binary &&\
+    cp desafios ./binary
+
 FROM scratch 
 
 WORKDIR /go/src/app
 
-COPY ./src/binary .
+COPY --from=builder /go/src/app/binary .
 
-CMD [ "./desafios" ]
+ENTRYPOINT [ "./desafios" ]
