@@ -1,0 +1,7 @@
+FROM scratch 
+
+WORKDIR /go/src/app
+
+COPY ./src/binary .
+
+CMD [ "./desafios" ]
